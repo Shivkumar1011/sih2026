@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HSSE Command Console — OIL SIF/NLP System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="shell">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <span class="sidebar__mark">OIL</span>
+        <div>
+          <h1>HSSE Console</h1>
+          <p>Safety intelligence review</p>
+        </div>
+      </div>
+
+      <nav class="sidebar__filters">
+        <h2>Filters</h2>
+
+        <div class="filter">
+          <label for="siteFilter">Site</label>
+          <select id="siteFilter">
+            <option value="">All sites</option>
+          </select>
+        </div>
+
+        <div class="filter">
+          <label for="ruleFilter">Life-Saving Rule</label>
+          <select id="ruleFilter">
+            <option value="">All rules</option>
+          </select>
+        </div>
+
+        <div class="filter">
+          <label for="statusFilter">SIF status</label>
+          <select id="statusFilter">
+            <option value="">All reports</option>
+            <option value="sif">SIF-potential only</option>
+            <option value="non-sif">Non-SIF only</option>
+          </select>
+        </div>
+
+        <div class="filter">
+          <label for="searchFilter">Search text</label>
+          <input type="text" id="searchFilter" placeholder="Search report text…" />
+        </div>
+
+        <button type="button" id="clearFilters" class="text-btn">Clear filters</button>
+      </nav>
+
+      <div class="sidebar__footer">
+        <span id="connStatus" class="conn-status">● Demo data (mock)</span>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main">
+
+      <header class="main__header">
+        <div>
+          <h2>Processed Safety Reports</h2>
+          <p id="reportCount" class="muted">Loading…</p>
+        </div>
+        <button type="button" id="refreshBtn" class="refresh-btn">Refresh</button>
+      </header>
+
+      <!-- Stat cards -->
+      <section class="stats">
+        <div class="stat">
+          <span class="stat__value" id="statTotal">–</span>
+          <span class="stat__label">Total reports</span>
+        </div>
+        <div class="stat stat--warn">
+          <span class="stat__value" id="statSif">–</span>
+          <span class="stat__label">SIF-potential flagged</span>
+        </div>
+        <div class="stat">
+          <span class="stat__value" id="statConfidence">–</span>
+          <span class="stat__label">Avg. SIF confidence</span>
+        </div>
+        <div class="stat stat--critical">
+          <span class="stat__value" id="statTopSite">–</span>
+          <span class="stat__label">Highest precursor density</span>
+        </div>
+      </section>
+
+      <!-- Site density ranking -->
+      <section class="panel">
+        <h3 class="panel__title">SIF-Precursor Density by Site</h3>
+        <div id="densityChart" class="density-chart"></div>
+      </section>
+
+      <!-- Reports table -->
+      <section class="panel">
+        <h3 class="panel__title">Report Queue</h3>
+        <div class="table-wrap">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Submitted</th>
+                <th>Site</th>
+                <th>Activity</th>
+                <th>Type</th>
+                <th>SIF Status</th>
+                <th>Rule</th>
+                <th>Confidence</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody">
+              <tr><td colspan="9" class="muted">Loading reports…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============ DETAIL MODAL ============ -->
+  <div id="modalOverlay" class="modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal__header">
+        <h3 id="modalTitle">Report detail</h3>
+        <button type="button" id="modalClose" class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal__body" id="modalBody"></div>
+      <div class="modal__footer">
+        <button type="button" id="markReviewedBtn" class="submit-btn">Mark as reviewed</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

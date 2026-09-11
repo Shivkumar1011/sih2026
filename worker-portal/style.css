@@ -1,0 +1,336 @@
+/* =========================================================
+   Field Safety Report — worker-facing portal
+   Design intent: rugged, high-contrast, large touch targets.
+   Built for outdoor light and gloved hands, voice-first input.
+   ========================================================= */
+
+:root {
+  --ink: #14181c;
+  --panel: #1e262d;
+  --panel-raised: #262f37;
+  --line: #384049;
+  --text: #f2f0ea;
+  --text-dim: #9aa3ab;
+  --amber: #f2a63c;
+  --amber-dim: #7a5a26;
+  --red: #d6564a;
+  --green: #4caf6d;
+  --radius: 10px;
+  --font-head: "Oswald", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mono { font-family: var(--font-mono); }
+
+/* ---------- Topbar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar__brand { display: flex; align-items: center; gap: 14px; }
+.topbar__mark {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: var(--amber);
+  padding: 7px 10px;
+  border-radius: 6px;
+}
+.topbar__titles h1 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 19px;
+  margin: 0;
+  line-height: 1.15;
+}
+.topbar__titles p {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.topbar__meta { font-size: 13px; color: var(--text-dim); }
+
+/* ---------- Layout ---------- */
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 20px 16px 60px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.card__title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0 0 14px;
+  letter-spacing: 0.01em;
+}
+
+.card__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.card__title-row .card__title { margin: 0; }
+
+.badge-optional {
+  font-size: 11px;
+  color: var(--text-dim);
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+/* ---------- Fields ---------- */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.field-row:last-child { margin-bottom: 0; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field label {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.field input,
+.field select,
+textarea {
+  background: var(--ink);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 13px 12px;
+  min-height: 48px;
+  width: 100%;
+}
+
+.field input:focus,
+.field select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--amber);
+}
+
+.checkbox-field { flex-direction: row; }
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+.checkbox-label input {
+  width: 22px;
+  height: 22px;
+  min-height: unset;
+  accent-color: var(--amber);
+  cursor: pointer;
+}
+
+/* ---------- Report type buttons ---------- */
+.type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.type-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  background: var(--ink);
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--text);
+  cursor: pointer;
+  min-height: 64px;
+  text-align: left;
+  font-family: var(--font-body);
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+.type-btn__label { font-weight: 600; font-size: 14.5px; }
+.type-btn__hint { font-size: 11.5px; color: var(--text-dim); }
+
+.type-btn[aria-checked="true"] {
+  border-color: var(--amber);
+  background: var(--amber-dim);
+}
+.type-btn[aria-checked="true"] .type-btn__hint { color: #e8d5ae; }
+
+/* ---------- Describe + mic ---------- */
+.describe-box textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
+
+.mic-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.mic-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel-raised);
+  border: 1.5px solid var(--line);
+  color: var(--text);
+  padding: 12px 18px;
+  border-radius: 30px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  min-height: 48px;
+}
+.mic-btn__icon {
+  color: var(--red);
+  font-size: 12px;
+  transition: transform 0.15s ease;
+}
+.mic-btn.recording {
+  border-color: var(--red);
+  background: #3a2321;
+}
+.mic-btn.recording .mic-btn__icon {
+  animation: pulse 1s infinite ease-in-out;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+}
+.mic-status { font-size: 12.5px; color: var(--text-dim); }
+
+/* ---------- Submit ---------- */
+.submit-section {
+  text-align: center;
+  margin: 26px 0 20px;
+}
+.submit-btn {
+  width: 100%;
+  background: var(--amber);
+  color: var(--ink);
+  border: none;
+  border-radius: 10px;
+  padding: 18px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  min-height: 58px;
+}
+.submit-btn:active { transform: translateY(1px); }
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.submit-note {
+  color: var(--text-dim);
+  font-size: 12.5px;
+  margin: 10px 0 0;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: var(--green);
+  color: #0d1f14;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 22px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  z-index: 50;
+}
+.toast.error { background: var(--red); color: #2a0d0a; }
+
+/* ---------- Recent list ---------- */
+.recent-card { margin-bottom: 0; }
+.recent-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.recent-empty { color: var(--text-dim); font-size: 13.5px; }
+
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--ink);
+}
+.recent-item__main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.recent-item__type { font-size: 13.5px; font-weight: 600; }
+.recent-item__desc {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+.recent-item__status {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  border: 1px solid var(--line);
+  padding: 4px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .field-row { grid-template-columns: 1fr; }
+  .type-grid { grid-template-columns: 1fr; }
+  .recent-item__desc { max-width: 160px; }
+}
+
+/* ---------- Accessibility ---------- */
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mic-btn.recording .mic-btn__icon { animation: none; }
+}

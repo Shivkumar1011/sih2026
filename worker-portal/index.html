@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>Field Safety Report — OIL SIF/NLP System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar__brand">
+      <span class="topbar__mark">OIL</span>
+      <div class="topbar__titles">
+        <h1>Field Safety Report</h1>
+        <p>Unsafe act &amp; condition reporting</p>
+      </div>
+    </div>
+    <div class="topbar__meta">
+      <span id="clock" class="mono"></span>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ============ WHO / WHERE ============ -->
+    <section class="card">
+      <h2 class="card__title">Where is this happening?</h2>
+      <div class="field-row">
+        <div class="field">
+          <label for="siteSelect">Site</label>
+          <select id="siteSelect" required>
+            <option value="" disabled selected>Select site</option>
+            <option value="Site A - Duliajan">Site A — Duliajan</option>
+            <option value="Site B - Digboi">Site B — Digboi</option>
+            <option value="Site C - Numaligarh">Site C — Numaligarh</option>
+            <option value="Site D - Moran">Site D — Moran</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="workerId">Your worker ID</label>
+          <input type="text" id="workerId" class="mono" placeholder="e.g. OIL-4821" required />
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="activityInput">Activity / task in progress</label>
+          <input type="text" id="activityInput" placeholder="e.g. Pipeline maintenance, confined space entry" required />
+        </div>
+        <div class="field">
+          <label for="locationInput">Exact location / asset</label>
+          <input type="text" id="locationInput" placeholder="e.g. Tank Farm 3, Wellhead 12" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REPORT TYPE ============ -->
+    <section class="card">
+      <h2 class="card__title">What are you reporting?</h2>
+      <div class="type-grid" id="typeGrid" role="radiogroup" aria-label="Report type">
+        <button type="button" class="type-btn" data-value="Unsafe Act" role="radio" aria-checked="false">
+          <span class="type-btn__label">Unsafe Act</span>
+          <span class="type-btn__hint">Something a person did</span>
+        </button>
+        <button type="button" class="type-btn" data-value="Unsafe Condition" role="radio" aria-checked="false">
+          <span class="type-btn__label">Unsafe Condition</span>
+          <span class="type-btn__hint">Something in the workplace</span>
+        </button>
+        <button type="button" class="type-btn" data-value="Near Miss" role="radio" aria-checked="false">
+          <span class="type-btn__label">Near Miss</span>
+          <span class="type-btn__hint">Almost caused harm</span>
+        </button>
+        <button type="button" class="type-btn" data-value="Incident" role="radio" aria-checked="false">
+          <span class="type-btn__label">Incident</span>
+          <span class="type-btn__hint">Harm or damage occurred</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ DESCRIPTION + MIC ============ -->
+    <section class="card">
+      <div class="card__title-row">
+        <h2 class="card__title">Describe what you saw</h2>
+        <span class="badge-optional">Speak or type</span>
+      </div>
+
+      <div class="describe-box">
+        <textarea id="descriptionInput" rows="5"
+          placeholder="e.g. Worker entered confined space without gas testing being carried out first."
+          required></textarea>
+
+        <div class="mic-row">
+          <button type="button" id="micBtn" class="mic-btn">
+            <span class="mic-btn__icon" id="micIcon">●</span>
+            <span id="micLabel">Tap to speak</span>
+          </button>
+          <span id="micStatus" class="mic-status"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ENVIRONMENT DETAILS ============ -->
+    <section class="card">
+      <h2 class="card__title">Workplace environment</h2>
+      <div class="field-row">
+        <div class="field">
+          <label for="weatherSelect">Weather / conditions</label>
+          <select id="weatherSelect">
+            <option value="Clear">Clear</option>
+            <option value="Rain">Rain</option>
+            <option value="Low visibility / fog">Low visibility / fog</option>
+            <option value="High wind">High wind</option>
+            <option value="Night / low light">Night / low light</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="equipmentInput">Equipment / machinery involved</label>
+          <input type="text" id="equipmentInput" placeholder="e.g. Crane, isolation valve, scaffold" />
+        </div>
+      </div>
+
+      <div class="field checkbox-field">
+        <label class="checkbox-label">
+          <input type="checkbox" id="ppeCheckbox" />
+          <span>Required PPE was being worn correctly</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- ============ SUBMIT ============ -->
+    <section class="submit-section">
+      <button type="button" id="submitBtn" class="submit-btn">Submit report</button>
+      <p class="submit-note">Your report goes directly to the HSSE safety team for review.</p>
+    </section>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <!-- ============ RECENT SUBMISSIONS ============ -->
+    <section class="card recent-card">
+      <h2 class="card__title">Your recent reports</h2>
+      <ul id="recentList" class="recent-list">
+        <li class="recent-empty">No reports submitted yet this session.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
