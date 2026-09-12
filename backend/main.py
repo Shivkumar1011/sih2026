@@ -1,22 +1,3 @@
-"""
-main.py
--------
-FastAPI backend for the OIL SIF/NLP dashboards.
-
-Endpoints (already exactly what both frontend script.js files call):
-    POST   /api/reports        - worker portal submits a new report
-    GET    /api/reports        - hsse console lists all reports
-    GET    /api/reports/{id}   - fetch a single report
-    PATCH  /api/reports/{id}   - hsse console marks a report reviewed
-
-Run it with:
-    pip install -r requirements.txt
-    uvicorn main:app --reload
-
-Then it's live at http://localhost:8000
-Interactive API docs (auto-generated) at http://localhost:8000/docs
-"""
-
 import json
 from datetime import datetime, timezone
 from typing import Optional
