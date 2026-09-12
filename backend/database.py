@@ -1,13 +1,3 @@
-"""
-database.py
------------
-SQLite setup for the OIL SIF/NLP reports database.
-
-Schema mirrors exactly what both frontend dashboards already send/expect
-(see worker-portal/script.js buildReportPayload() and
-hsse-console/script.js's rendering code).
-"""
-
 import sqlite3
 import json
 from pathlib import Path
